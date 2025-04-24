@@ -24,9 +24,10 @@ public class SleepLogServiceImpl implements SleepLogService {
         LocalTime startTime = sleepLogRequestDTO.getStartTime();
         LocalTime endTime = sleepLogRequestDTO.getEndTime();
         Long totalSleepSeconds = Duration.between(endTime, startTime).toSeconds();
+        LocalDate sleepDate = sleepLogRequestDTO.getSleepDate() != null ? sleepLogRequestDTO.getSleepDate() : LocalDate.now();
 
         SleepLog sleepLog = SleepLog.builder()
-                .sleepDate(LocalDate.now())
+                .sleepDate(sleepDate)
                 .startTime(startTime)
                 .endTime(endTime)
                 .totalSleepSeconds(totalSleepSeconds)
