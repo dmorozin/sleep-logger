@@ -16,8 +16,9 @@ public class SleepLogDAOImpl implements SleepLogDAO {
 
     @Override
     public void insert(SleepLog sleepLog) throws DataAccessException {
-        String sql = "INSERT INTO sleep_log (start_time, end_time, total_sleep_seconds, user_feel, user_id) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO sleep_log (sleep_date, start_time, end_time, total_sleep_seconds, user_feel, user_id) VALUES (?, ?, ?, ?, ?, ?)";
         jdbcTemplate.update(sql,
+                sleepLog.getSleepDate(),
                 sleepLog.getStartTime(),
                 sleepLog.getEndTime(),
                 sleepLog.getTotalSleepSeconds(),
@@ -31,9 +32,10 @@ public class SleepLogDAOImpl implements SleepLogDAO {
         return jdbcTemplate.queryForObject(sql, new SleepLogRowMapper(), sleepLogId, userId);
     }
 
-//    @Override
-//    public SleepLog findLastByUserId(Integer userId) {
-//        String sql = "SELECT * FROM sleep_log WHERE user_id = ?";
-//        return jdbcTemplate.queryForObject(sql, new SleepLogRowMapper(), userId);
-//    }
+    @Override
+    public SleepLog findLastByUserId(Integer userId) {
+        String sql = "SELECT * FROM sleep_log WHERE sleep_date::date = current_date AND user_id = ?";
+        return jdbcTemplate.query(sql, new SleepLogRowMapper(), userId)
+                .stream().findFirst().orElse(null);
+    }
 }

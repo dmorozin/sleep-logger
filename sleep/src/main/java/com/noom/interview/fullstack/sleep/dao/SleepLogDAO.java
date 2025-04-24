@@ -9,5 +9,5 @@ public interface SleepLogDAO {
 
     SleepLog findByIdAndUserId(Integer sleepLogId, Integer userId);
 
-//    SleepLog findLastByUserId(Integer userId);
+    SleepLog findLastByUserId(Integer userId);
 }

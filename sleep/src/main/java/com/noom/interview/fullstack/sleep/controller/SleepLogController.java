@@ -16,17 +16,15 @@ public class SleepLogController {
 
     private final SleepLogService sleepLogService;
 
-//    @GetMapping("/{userId}/last-night")
-//    public ResponseEntity<SleepLogResponseDTO> getSleepLogForLastNight(@PathVariable Integer userId) {
-//        return ResponseEntity.ok(sleepLogService.getSleepLogForUserForLastNight(userId));
-//    }
-
-
     @GetMapping("/{userId}/{sleepLogId}")
     public ResponseEntity<SleepLogResponseDTO> getSingleSleepLog(@PathVariable Integer userId, @PathVariable Integer sleepLogId) {
         return ResponseEntity.ok(sleepLogService.getSleepLogForUser(userId, sleepLogId));
     }
 
+    @GetMapping("/{userId}/last-night")
+    public ResponseEntity<SleepLogResponseDTO> getSleepLogForLastNight(@PathVariable Integer userId) {
+        return ResponseEntity.ok(sleepLogService.getSleepLogForUserForLastNight(userId));
+    }
 
     @PostMapping("/{userId}")
     public ResponseEntity<Void> createSleepLog(@RequestBody SleepLogRequestDTO sleepLogRequestDTO,

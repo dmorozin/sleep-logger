@@ -6,7 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Data
 @Builder
@@ -15,8 +16,9 @@ import java.time.LocalDateTime;
 public class SleepLog {
 
     private Integer id;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+    private LocalDate sleepDate;
+    private LocalTime startTime;
+    private LocalTime endTime;
     private Long totalSleepSeconds;
     private UserFeelEnum userFeel;
     private Integer userId;

@@ -1,21 +1,22 @@
 package com.noom.interview.fullstack.sleep.utils;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 public class SleepDateTimeUtils {
 
-    public static String getFormattedMonthDay(LocalDateTime localDateTime) {
+    public static String getFormattedMonthDay(LocalDate date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM");
-        String month = localDateTime.format(formatter);
+        String month = date.format(formatter);
 
-        int dayOfMonth = localDateTime.getDayOfMonth();
+        int dayOfMonth = date.getDayOfMonth();
         String day = dayOfMonth + getDaySuffix(dayOfMonth);
 
         return month + ", " + day;
     }
 
-    public static String getTimeInterval(LocalDateTime startTime, LocalDateTime endTime) {
+    public static String getTimeInterval(LocalTime startTime, LocalTime endTime) {
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm a");
         return startTime.format(timeFormatter) + " - " + endTime.format(timeFormatter);
     }

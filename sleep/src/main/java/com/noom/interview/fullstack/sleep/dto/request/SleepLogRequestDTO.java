@@ -5,18 +5,18 @@ import com.noom.interview.fullstack.sleep.utils.UserFeelEnum;
 import lombok.Data;
 import lombok.NonNull;
 
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Data
 public class SleepLogRequestDTO {
 
     @NonNull
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private LocalDateTime startTime;
+    @JsonFormat(pattern = "HH:mm")
+    private LocalTime startTime;
 
     @NonNull
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private LocalDateTime endTime;
+    @JsonFormat(pattern = "HH:mm")
+    private LocalTime endTime;
 
     @NonNull
     private UserFeelEnum userFeel;

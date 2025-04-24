@@ -9,5 +9,5 @@ public interface SleepLogService {
 
     SleepLogResponseDTO getSleepLogForUser(Integer userId, Integer sleepLogId);
 
-//    SleepLogResponseDTO getSleepLogForUserForLastNight(Integer userId);
+    SleepLogResponseDTO getSleepLogForUserForLastNight(Integer userId);
 }

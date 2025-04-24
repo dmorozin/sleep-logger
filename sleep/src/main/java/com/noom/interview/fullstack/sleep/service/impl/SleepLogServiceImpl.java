@@ -10,7 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Service
 @RequiredArgsConstructor
@@ -20,11 +21,12 @@ public class SleepLogServiceImpl implements SleepLogService {
 
     @Override
     public void createSleepLogForUser(SleepLogRequestDTO sleepLogRequestDTO, Integer userId) {
-        LocalDateTime startTime = sleepLogRequestDTO.getStartTime();
-        LocalDateTime endTime = sleepLogRequestDTO.getEndTime();
-        Long totalSleepSeconds = Duration.between(startTime, endTime).toSeconds();
+        LocalTime startTime = sleepLogRequestDTO.getStartTime();
+        LocalTime endTime = sleepLogRequestDTO.getEndTime();
+        Long totalSleepSeconds = Duration.between(endTime, startTime).toSeconds();
 
         SleepLog sleepLog = SleepLog.builder()
+                .sleepDate(LocalDate.now())
                 .startTime(startTime)
                 .endTime(endTime)
                 .totalSleepSeconds(totalSleepSeconds)
@@ -37,24 +39,24 @@ public class SleepLogServiceImpl implements SleepLogService {
 
     @Override
     public SleepLogResponseDTO getSleepLogForUser(Integer userId, Integer sleepLogId) {
-        SleepLog sleepLog = sleepLogDAO.findByIdAndUserId(sleepLogId, userId);
+        return getSleepLogResponseDTO(sleepLogDAO.findByIdAndUserId(sleepLogId, userId));
+    }
 
-        String date = SleepDateTimeUtils.getFormattedMonthDay(sleepLog.getStartTime());
+    @Override
+    public SleepLogResponseDTO getSleepLogForUserForLastNight(Integer userId) {
+        return getSleepLogResponseDTO(sleepLogDAO.findLastByUserId(userId));
+    }
+
+    private static SleepLogResponseDTO getSleepLogResponseDTO(SleepLog sleepLog) {
+        String sleepDate = SleepDateTimeUtils.getFormattedMonthDay(sleepLog.getSleepDate());
         String totalTimeInBed = SleepDateTimeUtils.getFormattedTime(sleepLog.getTotalSleepSeconds());
         String timeInBedInterval = SleepDateTimeUtils.getTimeInterval(sleepLog.getStartTime(), sleepLog.getEndTime());
 
         return SleepLogResponseDTO.builder()
-                .date(date)
+                .date(sleepDate)
                 .totalTimeInBed(totalTimeInBed)
                 .timeInBedInterval(timeInBedInterval)
                 .userFeel(sleepLog.getUserFeel().getTitle())
                 .build();
     }
-
-//    @Override
-//    public SleepLogResponseDTO getSleepLogForUserForLastNight(Integer userId) {
-//
-//
-//    }
-
 }
