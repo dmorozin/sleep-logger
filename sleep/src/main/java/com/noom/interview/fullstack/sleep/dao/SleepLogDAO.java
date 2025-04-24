@@ -6,4 +6,8 @@ import org.springframework.dao.DataAccessException;
 public interface SleepLogDAO {
 
     void insert(SleepLog sleepLog) throws DataAccessException;
+
+    SleepLog findByIdAndUserId(Integer sleepLogId, Integer userId);
+
+    SleepLog findLastByUserId(Integer userId);
 }
