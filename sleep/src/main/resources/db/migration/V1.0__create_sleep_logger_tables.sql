@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS sleep_log (
     id SERIAL PRIMARY KEY,
     start_time TIMESTAMP NOT NULL,
     end_time TIMESTAMP NOT NULL,
-    total_time INTEGER NOT NULL CHECK (total_time >= 0),
+    total_sleep_seconds BIGINT NOT NULL CHECK (total_sleep_seconds >= 0),
     user_feel VARCHAR(10) NOT NULL CHECK (user_feel IN ('BAD', 'OK', 'GOOD')),
     user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE
     );
