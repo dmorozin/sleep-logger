@@ -13,5 +13,5 @@ public interface SleepLogDAO {
 
     SleepLog findLastByUserId(Integer userId);
 
-    List<SleepLog> findLast30DaysByUserId(Integer userId);
+    List<SleepLog> findFromLastNDaysByUserId(Integer daysSince, Integer userId);
 }

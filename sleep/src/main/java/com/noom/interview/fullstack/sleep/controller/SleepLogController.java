@@ -29,7 +29,8 @@ public class SleepLogController {
 
     @GetMapping("/{userId}/average")
     public ResponseEntity<AverageSleepLogsDTO> getAverageSleepLogs(@PathVariable Integer userId) {
-        return ResponseEntity.ok(sleepLogService.getAverageSleepLogsForUser(userId));
+        int last30Days = 30;
+        return ResponseEntity.ok(sleepLogService.getAverageSleepLogsForUser(userId, last30Days));
     }
 
     @PostMapping("/{userId}")

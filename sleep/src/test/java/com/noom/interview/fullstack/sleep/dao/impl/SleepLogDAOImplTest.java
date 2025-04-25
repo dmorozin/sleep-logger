@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -79,5 +80,17 @@ class SleepLogDAOImplTest {
 
         SleepLog result = sleepLogDAO.findLastByUserId(1);
         assertNull(result);
+    }
+
+    @Test
+    void testFindFromLastNDaysByUserId() {
+        SleepLog mockSleepLog = sleepLog;
+        when(jdbcTemplate.query(any(String.class), any(SleepLogRowMapper.class), any(), any()))
+                .thenReturn(java.util.List.of(mockSleepLog));
+
+        List<SleepLog> result = sleepLogDAO.findFromLastNDaysByUserId(30, 1);
+        assertNotNull(result);
+        assertEquals(sleepLog.getUserId(), result.get(0).getUserId());
+        assertEquals(sleepLog.getSleepDate(), result.get(0).getSleepDate());
     }
 }

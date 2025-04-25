@@ -54,8 +54,8 @@ public class SleepLogServiceImpl implements SleepLogService {
     }
 
     @Override
-    public AverageSleepLogsDTO getAverageSleepLogsForUser(Integer userId) {
-        List<SleepLog> logs = sleepLogDAO.findLast30DaysByUserId(userId);
+    public AverageSleepLogsDTO getAverageSleepLogsForUser(Integer userId, Integer daysSince) {
+        List<SleepLog> logs = sleepLogDAO.findFromLastNDaysByUserId(daysSince, userId);
 
         if (logs.isEmpty()) {
             return AverageSleepLogsDTO.builder()

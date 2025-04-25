@@ -83,9 +83,9 @@ class SleepLogServiceImplTest {
                 buildLog(21, 30, 5, 30, 28800, UserFeelEnum.BAD)
         );
 
-        when(sleepLogDAO.findLast30DaysByUserId(1)).thenReturn(mockLogs);
+        when(sleepLogDAO.findFromLastNDaysByUserId(3, 1)).thenReturn(mockLogs);
 
-        AverageSleepLogsDTO result = sleepLogService.getAverageSleepLogsForUser(1);
+        AverageSleepLogsDTO result = sleepLogService.getAverageSleepLogsForUser(1, 3);
         assertNotNull(result);
         assertEquals("8 h 0 min", result.getAverageTotalTimeInBed());
         assertEquals(3, result.getUserFeels().values().stream().mapToInt(i -> i).sum());

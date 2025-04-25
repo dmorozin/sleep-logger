@@ -12,5 +12,5 @@ public interface SleepLogService {
 
     SleepLogDTO getSleepLogForUserForLastNight(Integer userId);
 
-    AverageSleepLogsDTO getAverageSleepLogsForUser(Integer userId);
+    AverageSleepLogsDTO getAverageSleepLogsForUser(Integer userId, Integer daysSince);
 }
