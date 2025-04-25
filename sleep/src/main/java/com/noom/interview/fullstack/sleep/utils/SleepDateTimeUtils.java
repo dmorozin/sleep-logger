@@ -4,10 +4,12 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
+import static com.noom.interview.fullstack.sleep.utils.Constants.*;
+
 public class SleepDateTimeUtils {
 
-    public static String getFormattedMonthDay(LocalDate date) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM");
+    public static String getFormattedMonthDay(LocalDate date, String pattern) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
         String month = date.format(formatter);
 
         int dayOfMonth = date.getDayOfMonth();
@@ -17,7 +19,7 @@ public class SleepDateTimeUtils {
     }
 
     public static String getTimeInterval(LocalTime startTime, LocalTime endTime) {
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm a");
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("h:mm a");
         return startTime.format(timeFormatter) + " - " + endTime.format(timeFormatter);
     }
 
@@ -29,18 +31,18 @@ public class SleepDateTimeUtils {
 
     private static String getDaySuffix(int day) {
         if (day >= 11 && day <= 13) {
-            return "th";
+            return OTHER_ORDER;
         }
 
         switch (day % 10) {
             case 1:
-                return "st";
+                return FIRST;
             case 2:
-                return "nd";
+                return SECOND;
             case 3:
-                return "rd";
+                return THIRD;
             default:
-                return "th";
+                return OTHER_ORDER;
         }
     }
 }

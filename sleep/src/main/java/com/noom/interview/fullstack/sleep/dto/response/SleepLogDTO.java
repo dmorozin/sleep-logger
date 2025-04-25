@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class SleepLogResponseDTO {
+public class SleepLogDTO {
 
     private final String date;
     private final String totalTimeInBed;
