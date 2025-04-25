@@ -73,7 +73,7 @@ public class SleepLogDAOImpl implements SleepLogDAO {
     @Override
     public List<SleepLog> findFromLastNDaysByUserId(Integer daysSince, Integer userId) {
         LocalDate dateSince = LocalDate.now().minusDays(daysSince);
-        String sql = "SELECT * FROM sleep_log WHERE sleep_date >= ? AND user_id = ?";
+        String sql = "SELECT * FROM sleep_log WHERE sleep_date >= ? AND user_id = ? ORDER BY sleep_date";
         try {
             return jdbcTemplate.query(sql, new SleepLogRowMapper(), dateSince, userId);
         } catch (DataAccessException e) {
