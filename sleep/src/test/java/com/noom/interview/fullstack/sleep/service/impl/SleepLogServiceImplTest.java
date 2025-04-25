@@ -2,7 +2,8 @@ package com.noom.interview.fullstack.sleep.service.impl;
 
 import com.noom.interview.fullstack.sleep.dao.SleepLogDAO;
 import com.noom.interview.fullstack.sleep.dto.request.SleepLogRequestDTO;
-import com.noom.interview.fullstack.sleep.dto.response.SleepLogResponseDTO;
+import com.noom.interview.fullstack.sleep.dto.response.AverageSleepLogsDTO;
+import com.noom.interview.fullstack.sleep.dto.response.SleepLogDTO;
 import com.noom.interview.fullstack.sleep.model.SleepLog;
 import com.noom.interview.fullstack.sleep.utils.SleepDateTimeUtils;
 import com.noom.interview.fullstack.sleep.utils.UserFeelEnum;
@@ -14,9 +15,9 @@ import org.mockito.MockitoAnnotations;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class SleepLogServiceImplTest {
@@ -56,22 +57,50 @@ class SleepLogServiceImplTest {
     @Test
     void testGetSleepLogForUser() {
         when(sleepLogDAO.findByIdAndUserId(1, 1)).thenReturn(sleepLog);
-        SleepLogResponseDTO response = sleepLogService.getSleepLogForUser(1, 1);
+        SleepLogDTO response = sleepLogService.getSleepLogForUser(1, 1);
         assertSleepLogResponse(response);
     }
 
     @Test
     void testGetSleepLogForUserForLastNight() {
         when(sleepLogDAO.findLastByUserId(1)).thenReturn(sleepLog);
-        SleepLogResponseDTO response = sleepLogService.getSleepLogForUserForLastNight(1);
+        SleepLogDTO response = sleepLogService.getSleepLogForUserForLastNight(1);
         assertSleepLogResponse(response);
     }
 
-    private void assertSleepLogResponse(SleepLogResponseDTO response) {
+    private void assertSleepLogResponse(SleepLogDTO response) {
         assertNotNull(response);
         assertEquals(sleepLog.getUserFeel().getTitle(), response.getUserFeel());
         assertEquals(SleepDateTimeUtils.getFormattedTime(sleepLog.getTotalSleepSeconds()),
                 response.getTotalTimeInBed());
+    }
+
+    @Test
+    void getAverageSleepLogsForUser_shouldReturnCorrectAverages() {
+        List<SleepLog> mockLogs = List.of(
+                buildLog(22, 0, 6, 0, 28800, UserFeelEnum.GOOD),
+                buildLog(23, 0, 7, 0, 28800, UserFeelEnum.OK),
+                buildLog(21, 30, 5, 30, 28800, UserFeelEnum.BAD)
+        );
+
+        when(sleepLogDAO.findLast30DaysByUserId(1)).thenReturn(mockLogs);
+
+        AverageSleepLogsDTO result = sleepLogService.getAverageSleepLogsForUser(1);
+        assertNotNull(result);
+        assertEquals("8 h 0 min", result.getAverageTotalTimeInBed());
+        assertEquals(3, result.getUserFeels().values().stream().mapToInt(i -> i).sum());
+        assertTrue(result.getDateRange().contains("to"));
+    }
+
+    private SleepLog buildLog(int startHour, int startMin, int endHour, int endMin, long totalSeconds, UserFeelEnum feel) {
+        return SleepLog.builder()
+                .sleepDate(LocalDate.now())
+                .startTime(LocalTime.of(startHour, startMin))
+                .endTime(LocalTime.of(endHour, endMin))
+                .totalSleepSeconds(totalSeconds)
+                .userFeel(feel)
+                .userId(1)
+                .build();
     }
 
 }
