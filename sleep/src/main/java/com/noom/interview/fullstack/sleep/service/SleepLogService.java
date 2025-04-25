@@ -1,13 +1,16 @@
 package com.noom.interview.fullstack.sleep.service;
 
 import com.noom.interview.fullstack.sleep.dto.request.SleepLogRequestDTO;
-import com.noom.interview.fullstack.sleep.dto.response.SleepLogResponseDTO;
+import com.noom.interview.fullstack.sleep.dto.response.AverageSleepLogsDTO;
+import com.noom.interview.fullstack.sleep.dto.response.SleepLogDTO;
 
 public interface SleepLogService {
 
     void createSleepLogForUser(SleepLogRequestDTO sleepLogRequestDTO, Integer userId);
 
-    SleepLogResponseDTO getSleepLogForUser(Integer userId, Integer sleepLogId);
+    SleepLogDTO getSleepLogForUser(Integer userId, Integer sleepLogId);
 
-    SleepLogResponseDTO getSleepLogForUserForLastNight(Integer userId);
+    SleepLogDTO getSleepLogForUserForLastNight(Integer userId);
+
+    AverageSleepLogsDTO getAverageSleepLogsForUser(Integer userId);
 }

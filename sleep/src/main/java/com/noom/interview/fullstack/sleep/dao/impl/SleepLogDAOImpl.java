@@ -8,6 +8,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 @RequiredArgsConstructor
 public class SleepLogDAOImpl implements SleepLogDAO {
@@ -37,5 +39,11 @@ public class SleepLogDAOImpl implements SleepLogDAO {
         String sql = "SELECT * FROM sleep_log WHERE sleep_date::date = current_date AND user_id = ?";
         return jdbcTemplate.query(sql, new SleepLogRowMapper(), userId)
                 .stream().findFirst().orElse(null);
+    }
+
+    @Override
+    public List<SleepLog> findLast30DaysByUserId(Integer userId) {
+        String sql = "SELECT * FROM sleep_log WHERE sleep_date::date > now() - interval '30 day' AND user_id = ?";
+        return jdbcTemplate.query(sql, new SleepLogRowMapper(), userId);
     }
 }
