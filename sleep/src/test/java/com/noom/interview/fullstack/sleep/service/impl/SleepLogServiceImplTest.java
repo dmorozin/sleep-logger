@@ -15,8 +15,10 @@ import org.mockito.MockitoAnnotations;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Collections;
 import java.util.List;
 
+import static com.noom.interview.fullstack.sleep.utils.Constants.NO_DATA;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -37,7 +39,7 @@ class SleepLogServiceImplTest {
 
         LocalTime startTime = LocalTime.of(22, 30);
         LocalTime endTime = LocalTime.of(6, 30);
-        sleepLogRequestDTO = new SleepLogRequestDTO(startTime, endTime, UserFeelEnum.GOOD);
+        sleepLogRequestDTO = new SleepLogRequestDTO(startTime, endTime, UserFeelEnum.GOOD, null);
         sleepLog = new SleepLog();
         sleepLog.setSleepDate(LocalDate.now());
         sleepLog.setStartTime(startTime);
@@ -76,7 +78,7 @@ class SleepLogServiceImplTest {
     }
 
     @Test
-    void getAverageSleepLogsForUser_shouldReturnCorrectAverages() {
+    void testGetAverageSleepLogsForUser() {
         List<SleepLog> mockLogs = List.of(
                 buildLog(22, 0, 6, 0, 28800, UserFeelEnum.GOOD),
                 buildLog(23, 0, 7, 0, 28800, UserFeelEnum.OK),
@@ -90,6 +92,20 @@ class SleepLogServiceImplTest {
         assertEquals("8 h 0 min", result.getAverageTotalTimeInBed());
         assertEquals(3, result.getUserFeels().values().stream().mapToInt(i -> i).sum());
         assertTrue(result.getDateRange().contains("to"));
+    }
+
+    @Test
+    void testGetAverageSleepLogsForUser_ShouldReturnEmptyList_WhenNoSleepLogs() {
+        List<SleepLog> mockLogs = Collections.emptyList();
+
+        when(sleepLogDAO.findFromLastNDaysByUserId(3, 1)).thenReturn(mockLogs);
+
+        AverageSleepLogsDTO result = sleepLogService.getAverageSleepLogsForUser(1, 3);
+        assertNotNull(result);
+        assertEquals(NO_DATA, result.getAverageTimeInBedInterval());
+        assertEquals(NO_DATA, result.getAverageTotalTimeInBed());
+        assertEquals(NO_DATA, result.getDateRange());
+        assertEquals(Collections.emptyMap(), result.getUserFeels());
     }
 
     private SleepLog buildLog(int startHour, int startMin, int endHour, int endMin, long totalSeconds, UserFeelEnum feel) {

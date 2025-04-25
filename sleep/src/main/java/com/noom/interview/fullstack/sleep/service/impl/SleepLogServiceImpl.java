@@ -14,9 +14,12 @@ import org.springframework.stereotype.Service;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.noom.interview.fullstack.sleep.utils.Constants.NO_DATA;
 
 @Service
 @RequiredArgsConstructor
@@ -59,9 +62,10 @@ public class SleepLogServiceImpl implements SleepLogService {
 
         if (logs.isEmpty()) {
             return AverageSleepLogsDTO.builder()
-                    .averageTimeInBedInterval("No data")
-                    .averageTotalTimeInBed("0 h 0 min")
-                    .dateRange("No data")
+                    .averageTimeInBedInterval(NO_DATA)
+                    .averageTotalTimeInBed(NO_DATA)
+                    .dateRange(NO_DATA)
+                    .userFeels(Collections.emptyMap())
                     .build();
         }
 
