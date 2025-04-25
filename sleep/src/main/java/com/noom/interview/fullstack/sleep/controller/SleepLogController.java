@@ -9,6 +9,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("api/sleep-log")
@@ -34,7 +35,7 @@ public class SleepLogController {
     }
 
     @PostMapping("/{userId}")
-    public ResponseEntity<Void> createSleepLog(@RequestBody SleepLogRequestDTO sleepLogRequestDTO,
+    public ResponseEntity<Void> createSleepLog(@Valid @RequestBody SleepLogRequestDTO sleepLogRequestDTO,
                                                @PathVariable Integer userId) throws DataAccessException {
         sleepLogService.createSleepLogForUser(sleepLogRequestDTO, userId);
         return ResponseEntity.ok().build();
