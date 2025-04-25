@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Collections;
 import java.util.HashMap;
@@ -31,8 +32,15 @@ public class SleepLogServiceImpl implements SleepLogService {
     public void createSleepLogForUser(SleepLogRequestDTO dto, Integer userId) {
         LocalTime startTime = dto.getStartTime();
         LocalTime endTime = dto.getEndTime();
-        Long totalSleepSeconds = Duration.between(endTime, startTime).toSeconds();
         LocalDate sleepDate = dto.getSleepDate() != null ? dto.getSleepDate() : LocalDate.now();
+
+        LocalDateTime startDateTime = LocalDateTime.of(sleepDate, startTime);
+        LocalDateTime endDateTime = LocalDateTime.of(sleepDate, endTime);
+        if (startTime.isAfter(endTime)) {
+            startDateTime = startDateTime.minusDays(1);
+        }
+
+        long totalSleepSeconds = Duration.between(startDateTime, endDateTime).toSeconds();
 
         SleepLog sleepLog = SleepLog.builder()
                 .sleepDate(sleepDate)
@@ -112,6 +120,7 @@ public class SleepLogServiceImpl implements SleepLogService {
         String timeInBedInterval = SleepDateTimeUtils.getTimeInterval(sleepLog.getStartTime(), sleepLog.getEndTime());
 
         return SleepLogDTO.builder()
+                .sleepLogId(sleepLog.getId())
                 .date(sleepDate)
                 .totalTimeInBed(totalTimeInBed)
                 .timeInBedInterval(timeInBedInterval)
