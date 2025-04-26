@@ -7,6 +7,7 @@ import lombok.Data;
 @Builder
 public class SleepLogDTO {
 
+    private final Integer sleepLogId;
     private final String date;
     private final String totalTimeInBed;
     private final String timeInBedInterval;

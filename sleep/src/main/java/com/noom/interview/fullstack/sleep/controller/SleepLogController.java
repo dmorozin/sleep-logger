@@ -9,6 +9,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("api/sleep-log")
@@ -28,13 +29,13 @@ public class SleepLogController {
     }
 
     @GetMapping("/{userId}/average")
-    public ResponseEntity<AverageSleepLogsDTO> getAverageSleepLogs(@PathVariable Integer userId) {
-        int last30Days = 30;
-        return ResponseEntity.ok(sleepLogService.getAverageSleepLogsForUser(userId, last30Days));
+    public ResponseEntity<AverageSleepLogsDTO> getAverageSleepLogs(@PathVariable Integer userId,
+                                                                   @RequestParam(defaultValue = "30", required = false) Integer daysSince) {
+        return ResponseEntity.ok(sleepLogService.getAverageSleepLogsForUser(userId, daysSince));
     }
 
     @PostMapping("/{userId}")
-    public ResponseEntity<Void> createSleepLog(@RequestBody SleepLogRequestDTO sleepLogRequestDTO,
+    public ResponseEntity<Void> createSleepLog(@Valid @RequestBody SleepLogRequestDTO sleepLogRequestDTO,
                                                @PathVariable Integer userId) throws DataAccessException {
         sleepLogService.createSleepLogForUser(sleepLogRequestDTO, userId);
         return ResponseEntity.ok().build();
