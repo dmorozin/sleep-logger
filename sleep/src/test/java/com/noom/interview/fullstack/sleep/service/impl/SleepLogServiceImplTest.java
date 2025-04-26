@@ -19,7 +19,8 @@ import java.util.Collections;
 import java.util.List;
 
 import static com.noom.interview.fullstack.sleep.utils.Constants.NO_DATA;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
 class SleepLogServiceImplTest {
@@ -80,18 +81,23 @@ class SleepLogServiceImplTest {
     @Test
     void testGetAverageSleepLogsForUser() {
         List<SleepLog> mockLogs = List.of(
-                buildLog(22, 0, 6, 0, 28800, UserFeelEnum.GOOD),
-                buildLog(23, 0, 7, 0, 28800, UserFeelEnum.OK),
-                buildLog(21, 30, 5, 30, 28800, UserFeelEnum.BAD)
+                buildLog(LocalDate.of(2025, 4, 10), 22, 30, 6, 30, 28800, UserFeelEnum.GOOD),
+                buildLog(LocalDate.of(2025, 4, 11), 23, 45, 5, 45, 21600, UserFeelEnum.OK),
+                buildLog(LocalDate.of(2025, 4, 12), 0, 15, 6, 45, 23400, UserFeelEnum.BAD),
+                buildLog(LocalDate.of(2025, 4, 13), 21, 0, 4, 30, 27000, UserFeelEnum.GOOD),
+                buildLog(LocalDate.of(2025, 4, 20), 1, 0, 8, 0, 25200, UserFeelEnum.OK)
         );
 
         when(sleepLogDAO.findFromLastNDaysByUserId(3, 1)).thenReturn(mockLogs);
 
         AverageSleepLogsDTO result = sleepLogService.getAverageSleepLogsForUser(1, 3);
         assertNotNull(result);
-        assertEquals("8 h 0 min", result.getAverageTotalTimeInBed());
-        assertEquals(3, result.getUserFeels().values().stream().mapToInt(i -> i).sum());
-        assertTrue(result.getDateRange().contains("to"));
+        assertEquals("Apr, 10th to Apr, 20th", result.getDateRange());
+        assertEquals("7 h 0 min", result.getAverageTotalTimeInBed());
+        assertEquals("1:42 pm - 6:18 am", result.getAverageTimeInBedInterval());
+        assertEquals(1, result.getUserFeels().get(UserFeelEnum.BAD.getTitle()));
+        assertEquals(2, result.getUserFeels().get(UserFeelEnum.OK.getTitle()));
+        assertEquals(2, result.getUserFeels().get(UserFeelEnum.GOOD.getTitle()));
     }
 
     @Test
@@ -108,9 +114,9 @@ class SleepLogServiceImplTest {
         assertEquals(Collections.emptyMap(), result.getUserFeels());
     }
 
-    private SleepLog buildLog(int startHour, int startMin, int endHour, int endMin, long totalSeconds, UserFeelEnum feel) {
+    private SleepLog buildLog(LocalDate sleepDate, int startHour, int startMin, int endHour, int endMin, long totalSeconds, UserFeelEnum feel) {
         return SleepLog.builder()
-                .sleepDate(LocalDate.now())
+                .sleepDate(sleepDate)
                 .startTime(LocalTime.of(startHour, startMin))
                 .endTime(LocalTime.of(endHour, endMin))
                 .totalSleepSeconds(totalSeconds)
