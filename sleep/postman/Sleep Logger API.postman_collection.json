@@ -1,0 +1,95 @@
+{
+  "info": {
+    "_postman_id": "d67751f8-acfa-4d86-a465-f78f06cfad95",
+    "name": "Sleep Logger API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+    "_exporter_id": "38572071"
+  },
+  "item": [
+    {
+      "name": "add sleep log",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"startTime\":\"23:12\",\r\n    \"endTime\": \"07:11\",\r\n    \"userFeel\": \"GOOD\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "localhost:8080/api/sleep-log/1",
+        "description": "This endpoint is used to submit sleep log data for a specific user.\n\n#### Request Body\n\n- startTime (string, required): The start time of the sleep log.\n    \n- endTime (string, required): The end time of the sleep log.\n    \n- userFeel (string, required): The user's feeling after the sleep."
+      },
+      "response": []
+    },
+    {
+      "name": "get last night sleep log",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "localhost:8080/api/sleep-log/1/last-night",
+        "description": "This endpoint retrieves the sleep log for a specific user for the previous night. The response is in JSON format and has the following schema:\n\n``` json\n{\n    \"type\": \"object\",\n    \"properties\": {\n        \"sleepLogId\": {\n            \"type\": \"integer\"\n        },\n        \"date\": {\n            \"type\": \"string\"\n        },\n        \"totalTimeInBed\": {\n            \"type\": \"string\"\n        },\n        \"timeInBedInterval\": {\n            \"type\": \"string\"\n        },\n        \"userFeel\": {\n            \"type\": \"string\"\n        }\n    }\n}\n\n ```"
+      },
+      "response": []
+    },
+    {
+      "name": "30 days average",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "localhost:8080/api/sleep-log/1/average",
+        "description": "The endpoint `/api/sleep-log/1/average` is a GET request that retrieves the average sleep log data for a specific user. The response is in JSON format and has the following schema:\n\n``` json\n{\n    \"type\": \"object\",\n    \"properties\": {\n        \"dateRange\": {\"type\": \"string\"},\n        \"averageTotalTimeInBed\": {\"type\": \"string\"},\n        \"averageTimeInBedInterval\": {\"type\": \"string\"},\n        \"userFeels\": {\n            \"type\": \"object\",\n            \"properties\": {\n                \"Bad\": {\"type\": \"number\"},\n                \"OK\": {\"type\": \"number\"},\n                \"Good\": {\"type\": \"number\"}\n            }\n        }\n    }\n}\n\n ```"
+      },
+      "response": []
+    },
+    {
+      "name": "get single sleep log",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "localhost:8080/api/sleep-log/1/15",
+        "description": "The endpoint retrieves sleep log information for a specific user and sleep log ID. The response is in JSON format and has the following schema:\n\n``` json\n{\n    \"type\": \"object\",\n    \"properties\": {\n        \"sleepLogId\": {\n            \"type\": \"integer\"\n        },\n        \"date\": {\n            \"type\": \"string\"\n        },\n        \"totalTimeInBed\": {\n            \"type\": \"string\"\n        },\n        \"timeInBedInterval\": {\n            \"type\": \"string\"\n        },\n        \"userFeel\": {\n            \"type\": \"string\"\n        }\n    }\n}\n\n ```"
+      },
+      "response": []
+    }
+  ]
+}
