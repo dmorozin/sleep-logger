@@ -16,8 +16,8 @@ public class ExceptionHandlerAdvice {
         return new ResponseEntity<>(buildExceptionDetails(exception, request), HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(SleepLogInsertException.class)
-    public ResponseEntity<ExceptionDetails> sleepLogInsertHandling(SleepLogInsertException exception, WebRequest request) {
+    @ExceptionHandler(ResourceInsertException.class)
+    public ResponseEntity<ExceptionDetails> sleepLogInsertHandling(ResourceInsertException exception, WebRequest request) {
         return new ResponseEntity<>(buildExceptionDetails(exception, request), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 

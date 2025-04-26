@@ -65,7 +65,7 @@ class SleepLogServiceImplTest {
 
     @Test
     void testGetSleepLogForUserForLastNight() {
-        when(sleepLogDAO.findLastByUserId(1)).thenReturn(sleepLog);
+        when(sleepLogDAO.findTodayLogByUserId(1)).thenReturn(sleepLog);
         SleepLogDTO response = sleepLogService.getSleepLogForUserForLastNight(1);
         assertSleepLogResponse(response);
     }

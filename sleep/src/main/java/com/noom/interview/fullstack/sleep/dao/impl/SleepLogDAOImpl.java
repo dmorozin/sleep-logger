@@ -3,7 +3,7 @@ package com.noom.interview.fullstack.sleep.dao.impl;
 import com.noom.interview.fullstack.sleep.dao.SleepLogDAO;
 import com.noom.interview.fullstack.sleep.exception.DatabaseFetchException;
 import com.noom.interview.fullstack.sleep.exception.ResourceNotFoundException;
-import com.noom.interview.fullstack.sleep.exception.SleepLogInsertException;
+import com.noom.interview.fullstack.sleep.exception.ResourceInsertException;
 import com.noom.interview.fullstack.sleep.model.SleepLog;
 import com.noom.interview.fullstack.sleep.model.SleepLogRowMapper;
 import lombok.RequiredArgsConstructor;
@@ -38,7 +38,7 @@ public class SleepLogDAOImpl implements SleepLogDAO {
                     sleepLog.getUserId());
         } catch (DataAccessException e) {
             log.error(e.getMessage(), e);
-            throw new SleepLogInsertException(String.format(SLEEP_LOG_INSERT_ERROR, sleepLog.getSleepDate().toString(), sleepLog.getUserId()));
+            throw new ResourceInsertException(String.format(SLEEP_LOG_INSERT_ERROR, sleepLog.getSleepDate().toString(), sleepLog.getUserId()));
         }
     }
 
@@ -57,7 +57,7 @@ public class SleepLogDAOImpl implements SleepLogDAO {
     }
 
     @Override
-    public SleepLog findLastByUserId(Integer userId) {
+    public SleepLog findTodayLogByUserId(Integer userId) {
         String sql = "SELECT * FROM sleep_log WHERE sleep_date::date = current_date AND user_id = ?";
         try {
             return jdbcTemplate.queryForObject(sql, new SleepLogRowMapper(), userId);

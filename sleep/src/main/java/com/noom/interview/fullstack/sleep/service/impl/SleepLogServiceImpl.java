@@ -36,7 +36,7 @@ public class SleepLogServiceImpl implements SleepLogService {
 
         LocalDateTime startDateTime = LocalDateTime.of(sleepDate, startTime);
         LocalDateTime endDateTime = LocalDateTime.of(sleepDate, endTime);
-        if (startTime.isAfter(endTime)) {
+        if (startTime.isAfter(endTime) || startTime.equals(endTime)) {
             startDateTime = startDateTime.minusDays(1);
         }
 
@@ -61,7 +61,7 @@ public class SleepLogServiceImpl implements SleepLogService {
 
     @Override
     public SleepLogDTO getSleepLogForUserForLastNight(Integer userId) {
-        return convertToSleepLogDTO(sleepLogDAO.findLastByUserId(userId));
+        return convertToSleepLogDTO(sleepLogDAO.findTodayLogByUserId(userId));
     }
 
     @Override
