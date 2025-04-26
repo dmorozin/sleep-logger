@@ -1,3 +1,14 @@
+INSERT INTO sleep_log(sleep_date, start_time, end_time, total_sleep_seconds, user_feel, user_id) VALUES ('2025-03-21', '22:45:00', '06:45:00', 28800, 'GOOD', 1);
+INSERT INTO sleep_log(sleep_date, start_time, end_time, total_sleep_seconds, user_feel, user_id) VALUES ('2025-03-22', '22:45:00', '06:45:00', 28800, 'GOOD', 1);
+INSERT INTO sleep_log(sleep_date, start_time, end_time, total_sleep_seconds, user_feel, user_id) VALUES ('2025-03-23', '22:45:00', '06:45:00', 28800, 'BAD', 1);
+INSERT INTO sleep_log(sleep_date, start_time, end_time, total_sleep_seconds, user_feel, user_id) VALUES ('2025-03-24', '23:15:00', '07:15:00', 28800, 'BAD', 1);
+INSERT INTO sleep_log(sleep_date, start_time, end_time, total_sleep_seconds, user_feel, user_id) VALUES ('2025-03-25', '23:30:00', '07:00:00', 25800, 'BAD', 1);
+INSERT INTO sleep_log(sleep_date, start_time, end_time, total_sleep_seconds, user_feel, user_id) VALUES ('2025-03-26', '22:30:00', '06:15:00', 27300, 'BAD', 1);
+INSERT INTO sleep_log(sleep_date, start_time, end_time, total_sleep_seconds, user_feel, user_id) VALUES ('2025-03-27', '23:00:00', '06:30:00', 27300, 'OK', 1);
+INSERT INTO sleep_log(sleep_date, start_time, end_time, total_sleep_seconds, user_feel, user_id) VALUES ('2025-03-28', '22:45:00', '06:45:00', 27600, 'OK', 1);
+INSERT INTO sleep_log(sleep_date, start_time, end_time, total_sleep_seconds, user_feel, user_id) VALUES ('2025-03-29', '22:30:00', '06:30:00', 27600, 'OK', 1);
+INSERT INTO sleep_log(sleep_date, start_time, end_time, total_sleep_seconds, user_feel, user_id) VALUES ('2025-03-30', '23:15:00', '07:15:00', 28800, 'OK', 1);
+INSERT INTO sleep_log(sleep_date, start_time, end_time, total_sleep_seconds, user_feel, user_id) VALUES ('2025-03-31', '22:00:00', '06:00:00', 28800, 'BAD', 1);
 INSERT INTO sleep_log(sleep_date, start_time, end_time, total_sleep_seconds, user_feel, user_id) VALUES ('2025-04-01', '22:00:00', '06:00:00', 28800, 'BAD', 1);
 INSERT INTO sleep_log(sleep_date, start_time, end_time, total_sleep_seconds, user_feel, user_id) VALUES ('2025-04-02', '22:00:00', '06:00:00', 28800, 'OK', 1);
 INSERT INTO sleep_log(sleep_date, start_time, end_time, total_sleep_seconds, user_feel, user_id) VALUES ('2025-04-03', '22:00:00', '06:00:00', 28800, 'GOOD', 1);
@@ -22,3 +33,9 @@ INSERT INTO sleep_log(sleep_date, start_time, end_time, total_sleep_seconds, use
 INSERT INTO sleep_log(sleep_date, start_time, end_time, total_sleep_seconds, user_feel, user_id) VALUES ('2025-04-22', '22:45:00', '06:45:00', 27600, 'GOOD', 1);
 INSERT INTO sleep_log(sleep_date, start_time, end_time, total_sleep_seconds, user_feel, user_id) VALUES ('2025-04-23', '22:30:00', '06:30:00', 27600, 'BAD', 1);
 INSERT INTO sleep_log(sleep_date, start_time, end_time, total_sleep_seconds, user_feel, user_id) VALUES ('2025-04-24', '23:15:00', '07:15:00', 28800, 'OK', 1);
+
+INSERT INTO sleep_log(sleep_date, start_time, end_time, total_sleep_seconds, user_feel, user_id) VALUES ('2025-04-20', '22:30:00', '06:15:00', 27300, 'BAD', 2);
+INSERT INTO sleep_log(sleep_date, start_time, end_time, total_sleep_seconds, user_feel, user_id) VALUES ('2025-04-21', '23:00:00', '06:30:00', 27300, 'GOOD', 2);
+INSERT INTO sleep_log(sleep_date, start_time, end_time, total_sleep_seconds, user_feel, user_id) VALUES ('2025-04-22', '22:45:00', '06:45:00', 27600, 'GOOD', 2);
+INSERT INTO sleep_log(sleep_date, start_time, end_time, total_sleep_seconds, user_feel, user_id) VALUES ('2025-04-23', '22:30:00', '06:30:00', 27600, 'GOOD', 2);
+INSERT INTO sleep_log(sleep_date, start_time, end_time, total_sleep_seconds, user_feel, user_id) VALUES ('2025-04-24', '23:15:00', '07:15:00', 28800, 'OK', 2);
